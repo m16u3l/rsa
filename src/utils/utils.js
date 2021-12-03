@@ -1,4 +1,4 @@
-let mcd = (m, n) => {
+const mcd = (m, n) => {
   var iaux; //auxiliar
   m = Math.abs(m); //tomamos valor absoluto
   n = Math.abs(n);
@@ -12,4 +12,5 @@ let mcd = (m, n) => {
   } while (i2 !== 0);
   return i1; //ultimo resto no nulo
 }
+
 export { mcd };

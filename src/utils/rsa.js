@@ -2,10 +2,16 @@ import { KeyPair } from "../models/models";
 import { getPrimo } from "./primos";
 import { mcd } from "./utils";
 
-let calcularD = () => {
-  return 321;
+let calcularD = (e, fN) => {
+  e %= fN;
+  for (let i = 1; i < fN; i++) {
+    if ((e * i) % fN === 1) {
+      return i;
+    }
+  }
 }
-let calcularE = (n, fN) => {
+
+let calcularE = (fN) => {
   let aux = 2;
   let e = aux;
   while (mcd(e, fN) !== 1 && 1 < e < fN) {
@@ -15,40 +21,35 @@ let calcularE = (n, fN) => {
   return e;
 }
 
-let generarClavePrivada = (n, Fn) => {
-  let d = calcularD();
-  return d + "," + n;
-}
-
-let generarClavePublica = (n, fN) => {
-  let e = calcularE(n, fN);
-  return e + "," + n;
-}
+let generarClave = (x, n) => x + "," + n;
 
 let generarParDeClaves = () => {
   // generar par de claves
-  const p = getPrimo();
-  const q = getPrimo();
+  const p = 11;
+  const q = 17;
 
   const n = p * q;
   const fN = (p - 1) * (q - 1);
 
-  let clavePublica = generarClavePublica(n, fN);
-  let clavePrivada = generarClavePrivada(n, fN);
-  return new KeyPair(clavePrivada, clavePublica);
+  const e = calcularE(fN);
+  const d = calcularD(e, fN);
+
+  let clavePublica = generarClave(e, n); //[publica]
+  let clavePrivada = generarClave(d, n); //[privada]
+  return new KeyPair(clavePublica, clavePrivada);
 }
 
-let encriptarRSA = (mensajeEnClaro, clavePublica, ClavePrivada) => {
-  console.log(mensajeEnClaro, clavePublica, ClavePrivada);
+let encriptarRSA = (mensajeEnClaro, clavePublica) => {
+  const [e, n] = clavePublica.split(',');
   // encriptar
-  let mensajeEncriptado = "mensaje encriptado";
+  let mensajeEncriptado = Math.pow(+mensajeEnClaro, +e) % n;
   return mensajeEncriptado;
 }
 
-let desencriptarRSA = (mensajeEncriptado, clavePublica, ClavePrivada) => {
-  console.log(mensajeEncriptado, clavePublica, ClavePrivada);
+let desencriptarRSA = (mensajeEncriptado, clavePrivada) => {
+  const [d, n] = clavePrivada.split(',');
   // desencriptar
-  let mensajeDesencriptado = "mensaje desencriptado";
+  let mensajeDesencriptado = Math.pow(+mensajeEncriptado, +d) % n;
   return mensajeDesencriptado;
 }
 

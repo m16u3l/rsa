@@ -37,16 +37,14 @@ class RSAForm extends React.Component {
   }
 
   handleClickEncriptar = () => {
-    console.log(this.state.mensajeEnClaro, this.state.clavePublicaEncriptar, this.state.clavePrivadaEncriptar);
-    let resMensajeEnciptadoRSA = encriptarRSA(this.state.mensajeEnClaro, this.state.clavePublicaEncriptar, this.state.clavePrivadaEncriptar);
+    let resMensajeEnciptadoRSA = encriptarRSA(this.state.mensajeEnClaro, this.state.clavePublicaEncriptar);
     this.setState({
       mensajeEnciptadoRSA: resMensajeEnciptadoRSA,
     });
   }
 
   handleClickDesencriptar = () => {
-    console.log(this.state.mensajeEncriptado, this.state.clavePublicaDesencriptar, this.state.clavePrivadaDesencriptar);
-    let resMensajeDesenciptadoRSA = desencriptarRSA(this.state.mensajeEncriptado, this.state.clavePublicaDesencriptar, this.state.clavePrivadaDesencriptar);
+    let resMensajeDesenciptadoRSA = desencriptarRSA(this.state.mensajeEncriptado, this.state.clavePrivadaDesencriptar);
     this.setState({
       mensajeDesenciptadoRSA: resMensajeDesenciptadoRSA
     });
@@ -87,9 +85,6 @@ class RSAForm extends React.Component {
             <TextField onChange={this.handleTextFieldChange("clavePublicaEncriptar")} style={{ width: '70%' }} m={2} label="Clave publica" color="primary" />
           </Box>
           <Box m={2}>
-            <TextField onChange={this.handleTextFieldChange("clavePrivadaEncriptar")} style={{ width: '70%' }} m={2} label="Clave privada" color="primary" />
-          </Box>
-          <Box m={2}>
             <Button onClick={this.handleClickEncriptar} variant="contained">Encriptar</Button>
           </Box>
           <Box m={2}>
@@ -103,9 +98,6 @@ class RSAForm extends React.Component {
           </Typography>
           <Box m={2}>
             <TextField onChange={this.handleTextFieldChange("mensajeEncriptado")} style={{ width: '70%' }} m={2} label="Mensaje encriptado" color="primary" />
-          </Box>
-          <Box m={2}>
-            <TextField onChange={this.handleTextFieldChange("clavePublicaDesencriptar")} style={{ width: '70%' }} m={2} label="Clave publica" color="primary" />
           </Box>
           <Box m={2}>
             <TextField onChange={this.handleTextFieldChange("clavePrivadaDesencriptar")} style={{ width: '70%' }} m={2} label="Clave privada" color="primary" />
