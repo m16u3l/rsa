@@ -7,7 +7,7 @@ import { Container } from '@mui/material';
 import { TextField } from "@mui/material";
 import { Box } from "@mui/system";
 
-import { generarParDeClaves, encriptarRSA, desencriptarRSA } from '../controllers/rsa'
+import { generarParDeClaves, encriptarRSA, desencriptarRSA } from '../utils/rsa'
 
 class RSAForm extends React.Component {
   constructor(props) {
