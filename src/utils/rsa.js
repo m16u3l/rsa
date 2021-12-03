@@ -1,6 +1,7 @@
 import { KeyPair } from "../models/models";
-import { getPrimo } from "./primos";
+//import { getPrimo } from "./primos";
 import { mcd } from "./utils";
+import bigInt from "big-integer";
 
 let calcularD = (e, fN) => {
   e %= fN;
@@ -25,8 +26,9 @@ let generarClave = (x, n) => x + "," + n;
 
 let generarParDeClaves = () => {
   // generar par de claves
-  const p = 11;
-  const q = 17;
+  // cambiar aca
+  const p = 111;
+  const q = 117;
 
   const n = p * q;
   const fN = (p - 1) * (q - 1);
@@ -40,16 +42,22 @@ let generarParDeClaves = () => {
 }
 
 let encriptarRSA = (mensajeEnClaro, clavePublica) => {
-  const [e, n] = clavePublica.split(',');
+  const [es, ns] = clavePublica.split(',');
+  const e = bigInt(es);
+  const n = bigInt(ns);
   // encriptar
-  let mensajeEncriptado = Math.pow(+mensajeEnClaro, +e) % n;
+  let mensajeEncriptado = (bigInt(mensajeEnClaro).pow(e)).mod(n);
   return mensajeEncriptado;
 }
 
 let desencriptarRSA = (mensajeEncriptado, clavePrivada) => {
-  const [d, n] = clavePrivada.split(',');
+  const [ds, ns] = clavePrivada.split(',');
+  const d = bigInt(ds);
+  const n = bigInt(ns);
+
   // desencriptar
-  let mensajeDesencriptado = Math.pow(+mensajeEncriptado, +d) % n;
+  const x = bigInt(mensajeEncriptado).pow(d);
+  const mensajeDesencriptado = x.mod(n);
   return mensajeDesencriptado;
 }
 
