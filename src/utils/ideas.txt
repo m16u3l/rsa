@@ -1,0 +1,26 @@
+ 6 <= x <= 90
+
+05+100
+105
+
+e = 07        = 1H
+n = 05 96 43 67
+e = [
+  05,    = 1F
+  96,    = 4R
+  43,    = 3V
+  67,    = 4B
+]
+
+clave publica = {1H,1F4R3V}
+
+array = [
+         a b c d e f g h i j k l m n o p q r s t u v w x y z
+         a b c d e f g h i j k l m n o p q r s t u v w x y z
+         a b c d e f g h i j k l m n o p q r s t u v w x y z
+         a b c d e f g h i j k l m n o p q r s t u v
+        ]
+
+char = array[x]
+
+
