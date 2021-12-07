@@ -1,6 +1,7 @@
 import { KeyPair } from "../models/models";
 import { getPrimo } from "./primos";
-import { mcd } from "./utils";
+import { mcd, getCodeHex, getCodeDec } from "./utils";
+
 import bigInt from "big-integer";
 
 let calcularD = (e, fN) => {
@@ -23,7 +24,11 @@ let calcularE = (fN) => {
   return e;
 }
 
-let generarClave = (x, n) => x + "," + n;
+let generarClave = (x, n) => {
+  const xAscii = getCodeHex(x);
+  const nAscii = getCodeHex(n);
+  return xAscii + "," + nAscii
+};
 
 let generarParDeClaves = () => {
   // generar par de claves
@@ -46,33 +51,32 @@ const encriptarRSA = (mensajeEnClaro, clavePublica) => {
   console.log(mensajeEnClaro)
   console.log(clavePublica)
   const [es, ns] = clavePublica.split(',');
-  const e = bigInt(es);
-  const n = bigInt(ns);
+  const e = bigInt(getCodeDec(es));
+  const n = bigInt(getCodeDec(ns));
 
   const arrayEncriptados = [];
 
   for (let i = 0; i < mensajeEnClaro.length; i++) {
-    let ascii = mensajeEnClaro.charCodeAt(i);
+    const ascii = mensajeEnClaro.charCodeAt(i);
     // encriptar
-    let charencripted = bigInt(ascii).modPow(e, n);
-    arrayEncriptados.push(charencripted);
+    const cadenaEcriptada = bigInt(ascii).modPow(e, n);
+    const valor = getCodeHex(+cadenaEcriptada);
+    arrayEncriptados.push(valor);
   }
-
-  // let mensajeEncriptado = bigInt(mensajeEnClaro).modPow(e, n);
   return arrayEncriptados;
 }
 
 let desencriptarRSA = (mensajeEncriptado, clavePrivada) => {
   const [ds, ns] = clavePrivada.split(',');
 
-  const d = bigInt(ds);
-  const n = bigInt(ns);
+  const d = bigInt(getCodeDec(ds));
+  const n = bigInt(getCodeDec(ns));
 
   let mensajeDesencriptado = "";
   const arrayEncriptados = mensajeEncriptado.split(",");
   for (let i = 0; i < arrayEncriptados.length; i++) {
     // desencriptar
-    const ascii = bigInt(arrayEncriptados[i]).modPow(d, n);
+    const ascii = bigInt(getCodeDec(arrayEncriptados[i])).modPow(d, n);
     mensajeDesencriptado += String.fromCharCode(ascii);
   }
 

@@ -82,7 +82,7 @@ class RSAForm extends React.Component {
       <Box m={3} p={5} justifyContent="center">
         <Container>
           <Typography variant="h3" component="h3">
-            Algoritmo RSA
+            Algoritmo RSA Modificado
           </Typography>
           <Box m={2}>
             <Button onClick={this.handleClickGenerarClaves} variant="contained">Generar claves</Button>

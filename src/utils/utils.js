@@ -13,4 +13,22 @@ const mcd = (m, n) => {
   return i1; //ultimo resto no nulo
 }
 
-export { mcd };
+/**
+ * 
+ * @param {number} x 
+ * @returns hexadecimal string
+ */
+const getCodeHex = (x) => {
+  return x.toString(16).toUpperCase();
+}
+
+/**
+ * 
+ * @param {string} x 
+ * @returns decimal number
+ */
+const getCodeDec = (x) => {
+  return parseInt(x, 16);
+}
+
+export { mcd, getCodeHex, getCodeDec };
