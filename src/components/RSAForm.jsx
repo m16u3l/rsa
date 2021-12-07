@@ -65,23 +65,16 @@ class RSAForm extends React.Component {
     });
   }
 
-  handleChangeImage = (evt) => {
-    console.log("Uploading");
-    
-    var self = this;
-    var reader = new FileReader();
-    var file = evt.target.files[0];
-
-    reader.onload = function(upload) {
+  handleChangeImage = (event) => {
+    let self = this;
+    let reader = new FileReader();
+    let file = event.target.files[0];
+    reader.onload = (upload) => {        
         self.setState({
             mensajeEnClaro: upload.target.result
-        }, function() {
-          console.log(self.state.image);
         });
     };
     reader.readAsDataURL(file);
-    console.log(this.state.image);
-    console.log("Uploaded");
   }
 
   render() {
