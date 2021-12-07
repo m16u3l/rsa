@@ -43,6 +43,8 @@ let generarParDeClaves = () => {
 }
 
 const encriptarRSA = (mensajeEnClaro, clavePublica) => {
+  console.log(mensajeEnClaro)
+  console.log(clavePublica)
   const [es, ns] = clavePublica.split(',');
   const e = bigInt(es);
   const n = bigInt(ns);

@@ -25,6 +25,8 @@ class RSAForm extends React.Component {
       clavePublicaDesencriptar: "",
       clavePrivadaDesencriptar: "",
       mensajeDesenciptadoRSA: "",
+
+      clavePrivadaDesencriptarImagen: "",
     }
   }
 
@@ -50,10 +52,36 @@ class RSAForm extends React.Component {
     });
   }
 
+  handleClickEncriptarImagen = () => {
+    let resMensajeDesenciptadoRSA = encriptarRSA(this.state.image, this.state.publica);
+    this.setState({
+      mensajeDesenciptadoRSA: resMensajeDesenciptadoRSA
+    });
+  }
+
   handleTextFieldChange = (itemState) => (event) => {
     this.setState({
       [itemState]: event.target.value
     });
+  }
+
+  handleChangeImage = (evt) => {
+    console.log("Uploading");
+    
+    var self = this;
+    var reader = new FileReader();
+    var file = evt.target.files[0];
+
+    reader.onload = function(upload) {
+        self.setState({
+            mensajeEnClaro: upload.target.result
+        }, function() {
+          console.log(self.state.image);
+        });
+    };
+    reader.readAsDataURL(file);
+    console.log(this.state.image);
+    console.log("Uploaded");
   }
 
   render() {
@@ -107,6 +135,21 @@ class RSAForm extends React.Component {
           </Box>
           <Box m={2}>
             <TextField variant="filled" value={this.state.mensajeDesenciptadoRSA} style={{ width: '70%' }} m={2} label="Mensaje descifrado" color="primary" />
+          </Box>
+        </Container>
+        <Container>
+          <Typography variant="h4" component="h4">
+            Encriptar Imagen
+          </Typography>
+          <Box>
+            <Button variant="contained" component="label">
+              Upload File
+              <input onChange={this.handleChangeImage} type="file" hidden />
+            </Button>
+            <img alt='Uploaded' src={this.state.mensajeDesenciptadoRSA} />
+          </Box>
+          <Box m={2}>
+            <Button onClick={this.handleClickEncriptar} variant="contained">Encriptar</Button>
           </Box>
         </Container>
       </Box>
