@@ -97,7 +97,7 @@ class RSAForm extends React.Component {
     </Box>) : <div />;
 
     return (
-      <Box mr={2} pr={2} justifyContent="center">
+      <Box mt={4} mr={2} pr={2} justifyContent="center">
         <Container mb={4}>
           <Box mb={2}>
             <Typography textAlign="center" variant="h3" component="h3">
