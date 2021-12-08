@@ -64,7 +64,7 @@ const encriptarRSA = (mensajeEnClaro = "", clavePublica = "") => {
     }
     return arrayEncriptados;
   } catch (e) {
-    alert("Sucedio algo imprevisto, por favor recargue la pagina y vuelva a itentar")
+    alert("Sucedio algo imprevisto, por favor recargue la pagina y vuelva a intentar")
   }
 }
 
@@ -85,7 +85,7 @@ let desencriptarRSA = (mensajeEncriptado = "", clavePrivada = "") => {
 
     return mensajeDesencriptado;
   } catch (e) {
-    alert("Sucedio algo imprevisto, por favor recargue la pagina y vuelva a itentar")
+    alert("Sucedio algo imprevisto, por favor recargue la pagina y vuelva a intentar")
   }
 }
 
