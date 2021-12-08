@@ -47,40 +47,46 @@ let generarParDeClaves = () => {
   return new KeyPair(clavePublica, clavePrivada);
 }
 
-const encriptarRSA = (mensajeEnClaro, clavePublica) => {
-  console.log(mensajeEnClaro)
-  console.log(clavePublica)
-  const [es, ns] = clavePublica.split(',');
-  const e = bigInt(getCodeDec(es));
-  const n = bigInt(getCodeDec(ns));
+const encriptarRSA = (mensajeEnClaro = "", clavePublica = "") => {
+  try {
+    const [es, ns] = clavePublica.split(',');
+    const e = bigInt(getCodeDec(es));
+    const n = bigInt(getCodeDec(ns));
 
-  const arrayEncriptados = [];
+    const arrayEncriptados = [];
 
-  for (let i = 0; i < mensajeEnClaro.length; i++) {
-    const ascii = mensajeEnClaro.charCodeAt(i);
-    // encriptar
-    const cadenaEcriptada = bigInt(ascii).modPow(e, n);
-    const valor = getCodeHex(+cadenaEcriptada);
-    arrayEncriptados.push(valor);
+    for (let i = 0; i < mensajeEnClaro.length; i++) {
+      const ascii = mensajeEnClaro.charCodeAt(i);
+      // encriptar
+      const cadenaEcriptada = bigInt(ascii).modPow(e, n);
+      const valor = getCodeHex(+cadenaEcriptada);
+      arrayEncriptados.push(valor);
+    }
+    return arrayEncriptados;
+  } catch (e) {
+    alert("Sucedio algo imprevisto, por favor recargue la pagina y vuelva a itentar")
   }
-  return arrayEncriptados;
 }
 
-let desencriptarRSA = (mensajeEncriptado, clavePrivada) => {
-  const [ds, ns] = clavePrivada.split(',');
+let desencriptarRSA = (mensajeEncriptado = "", clavePrivada = "") => {
+  try {
+    const [ds, ns] = clavePrivada.split(',');
 
-  const d = bigInt(getCodeDec(ds));
-  const n = bigInt(getCodeDec(ns));
+    const d = bigInt(getCodeDec(ds));
+    const n = bigInt(getCodeDec(ns));
 
-  let mensajeDesencriptado = "";
-  const arrayEncriptados = mensajeEncriptado.split(",");
-  for (let i = 0; i < arrayEncriptados.length; i++) {
-    // desencriptar
-    const ascii = bigInt(getCodeDec(arrayEncriptados[i])).modPow(d, n);
-    mensajeDesencriptado += String.fromCharCode(ascii);
+    let mensajeDesencriptado = "";
+    const arrayEncriptados = mensajeEncriptado.split(",");
+    for (let i = 0; i < arrayEncriptados.length; i++) {
+      // desencriptar
+      const ascii = bigInt(getCodeDec(arrayEncriptados[i])).modPow(d, n);
+      mensajeDesencriptado += String.fromCharCode(ascii);
+    }
+
+    return mensajeDesencriptado;
+  } catch (e) {
+    alert("Sucedio algo imprevisto, por favor recargue la pagina y vuelva a itentar")
   }
-
-  return mensajeDesencriptado;
 }
 
 export { generarParDeClaves, encriptarRSA, desencriptarRSA };
