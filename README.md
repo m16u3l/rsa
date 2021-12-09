@@ -1,6 +1,8 @@
-# rsa
+# Algoritmo GP-1
 
-# How to run
+## Como correr como developer
+
+Tener instalado node js y ejecutar los siguientes comandos:
 
 ```
 npm install
