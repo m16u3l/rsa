@@ -34,6 +34,7 @@ class RSAForm extends React.Component {
       image: false,
       mensajeImagenDesenciptadoRSA: "",
       clavePrivadaDesencriptarImagen: "",
+      fileTypes: ["image/jpeg", "image/jpg", "image/png"],
     }
   }
 
@@ -53,10 +54,12 @@ class RSAForm extends React.Component {
   }
 
   handleClickDesencriptar = () => {
-    let resMensajeDesenciptadoRSA = desencriptarRSA(this.state.mensajeEncriptado, this.state.clavePrivadaDesencriptar);
+    const resMensajeDesenciptadoRSA = desencriptarRSA(this.state.mensajeEncriptado, this.state.clavePrivadaDesencriptar);
+    const esImagen = resMensajeDesenciptadoRSA.includes("data:image");
     this.setState({
-      mensajeImagenDesenciptadoRSA: this.state.image ? resMensajeDesenciptadoRSA : "",
-      mensajeDesenciptadoRSA: this.state.image ? "" : resMensajeDesenciptadoRSA
+      mensajeImagenDesenciptadoRSA: esImagen ? resMensajeDesenciptadoRSA : "",
+      mensajeDesenciptadoRSA: esImagen ? "" : resMensajeDesenciptadoRSA,
+      image: esImagen ? true : false,
     });
   }
 
@@ -77,13 +80,17 @@ class RSAForm extends React.Component {
     let self = this;
     let reader = new FileReader();
     let file = event.target.files[0];
-    reader.onload = (upload) => {
-      self.setState({
-        mensajeEnClaro: upload.target.result,
-        image: true
-      });
-    };
-    reader.readAsDataURL(file);
+    if (file.size > 100000 || !this.state.fileTypes.includes(file.type)) {
+      alert("Archivo no permitido");
+    } else {
+      reader.onload = (upload) => {
+        self.setState({
+          mensajeEnClaro: upload.target.result,
+          image: true
+        });
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   render() {
